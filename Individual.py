@@ -41,7 +41,7 @@ class Individual:
             raise IndexError("index out of range")
         
     def __repr__(self):
-        return f"""Individual(Model Depth = {len(self.layer_layout)}, Optimizer={self.optimizer}, Loss={self.loss}, fitness={self.fitness})"""
+        return f"""Individual(Model Depth = {len(self.layer_layout)}, Optimizer={self.optimizer}, Loss={getattr(self.loss, 'name', self.loss)}, fitness={self.fitness})"""
     
     def generate_model(self, x_train, y_train, x_val, y_val, patience=PATIENCE, epochs=EPOCHS):
         
