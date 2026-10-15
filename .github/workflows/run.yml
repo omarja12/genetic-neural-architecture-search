@@ -1,0 +1,30 @@
+name: run
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      MPLBACKEND: Agg
+      TF_CPP_MIN_LOG_LEVEL: "3"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python check.py
+      - name: Small GA run
+        run: python Genetic_Programing_Neural_Networks.py
+        env:
+          GA_GENERATIONS: "3"
+          GA_SIZE: "6"
+          GA_EPOCHS: "10"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fitness-by-generation
+          path: fitness_by_generation.png
